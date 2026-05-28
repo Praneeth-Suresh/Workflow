@@ -20,27 +20,6 @@ The core workflow creation happens in `app/api/generate-workflow/route.ts` using
 - Shows a React Flow visualization before export.
 - Downloads an inactive n8n workflow JSON file.
 
-## Project Structure
-
-```text
-Guide/Workflow
-├── app
-│   ├── api/generate-workflow/route.ts
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-├── components
-│   ├── WorkflowBuilder.tsx
-│   └── WorkflowCanvas.tsx
-├── lib
-│   ├── examples.ts
-│   ├── n8n.ts
-│   └── workflow-schema.ts
-├── AGENTS.md
-├── README.md
-└── workflow-run-through.md
-```
-
 ## Requirements
 
 - Node.js 20 or newer.
