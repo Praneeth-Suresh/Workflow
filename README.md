@@ -1,13 +1,25 @@
 # Voice Workflow Automation Builder
 
-A small React/Next.js app that turns a voice or text workflow request into:
+A small React/Next.js prototype that turns a voice or text workflow request into:
 
 1. One optimization multiple-choice question.
 2. A validated intermediate workflow graph.
 3. A visual workflow preview.
 4. An importable n8n JSON workflow file.
 
-The core workflow creation happens in `app/api/generate-workflow/route.ts` using the Vercel AI SDK. The rest of the app uses simple boilerplate and open source UI libraries.
+The core workflow creation happens in `app/api/generate-workflow/route.ts` using the Vercel AI SDK. The browser can preview and download a built-in example without contacting a model.
+
+
+## Try the sample without an API key
+
+From this repository's root, run:
+
+```bash
+npm ci
+npm run dev
+```
+
+Use Node.js 24 LTS, which satisfies the locked runtime and tooling requirements. Open http://localhost:3000/ and select **Sample**. You should see the `Lead Enrichment Follow Up` graph. Inspect the warning and JSON preview, then select **Download** to see the inactive n8n export. This path does not need n8n, microphone access, or an API key.
 
 ## What It Does
 
@@ -20,46 +32,12 @@ The core workflow creation happens in `app/api/generate-workflow/route.ts` using
 - Shows a React Flow visualization before export.
 - Downloads an inactive n8n workflow JSON file.
 
-## Requirements
 
-- Node.js 20 or newer.
-- An OpenAI API key.
-- A browser that supports the Web Speech API for microphone input. Chrome works well. Other browsers can use the text box fallback.
+## Generate a draft with a model
 
-## Setup
+Copy `.env.example` to `.env.local` from the repository root, set your OpenAI API key, then restart the dev server. `OPENAI_MODEL` is optional; the example file shows how to set it.
 
-From this folder:
-
-```bash
-cd Guide/Workflow
-npm install
-cp .env.example .env.local
-```
-
-Edit `.env.local`:
-
-```bash
-OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL=gpt-4.1-mini
-```
-
-## Run
-
-```bash
-npm run dev
-```
-
-Open:
-
-```text
-http://localhost:3000
-```
-
-If port `3000` is already in use, Next.js will suggest another port or you can run:
-
-```bash
-npm run dev -- -p 3001
-```
+For live generation, use fictional text rather than customer or personal data: the server sends your request to the model provider. Voice input depends on browser Web Speech support, and typed input works without microphone access.
 
 ## How To Use
 
@@ -72,9 +50,7 @@ npm run dev -- -p 3001
 7. Inspect the JSON preview.
 8. Click **Download** to export the n8n workflow JSON.
 9. Import the JSON into n8n.
-10. Replace placeholder URLs and configure credentials before activation.
-
-You can click **Sample** without an API key to inspect the visualization and export path.
+10. Review every node and external destination in a sandbox n8n instance before adding credentials or activating the workflow. The schema checks structure; it does not guarantee that a generated action is appropriate.
 
 ## Example Prompt
 
